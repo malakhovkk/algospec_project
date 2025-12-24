@@ -7,18 +7,19 @@ export class EmailService {
   private transporter;
   private isConfigured = false;
   private smtpHost: string;
+  private smtpPort: number;
 
   constructor() {
     // Проверяем, настроен ли SMTP
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     this.smtpHost = process.env.SMTP_HOST || 'smtp.yandex.ru';
-    const smtpPort = parseInt(process.env.SMTP_PORT || '465');
+    this.smtpPort = parseInt(process.env.SMTP_PORT || '465');
     
     // Отладочная информация
     this.logger.log(`🔍 Проверка SMTP настроек:`);
     this.logger.log(`   SMTP_HOST: ${this.smtpHost}`);
-    this.logger.log(`   SMTP_PORT: ${smtpPort}`);
+    this.logger.log(`   SMTP_PORT: ${this.smtpPort}`);
     this.logger.log(`   SMTP_USER: ${smtpUser ? 'установлен (' + smtpUser + ')' : 'не установлен'}`);
     this.logger.log(`   SMTP_PASS: ${smtpPass ? 'установлен (***)' : 'не установлен'}`);
     
@@ -27,7 +28,7 @@ export class EmailService {
       // Настройка для реального SMTP сервера
       // Для Yandex: порт 465 (SSL) или 587 (STARTTLS)
       // Для Gmail: порт 587 (STARTTLS) или 465 (SSL)
-      const usePort = smtpPort || (this.smtpHost.includes('yandex') ? 465 : 587);
+      const usePort = this.smtpPort || (this.smtpHost.includes('yandex') ? 465 : 587);
       const useSecure = usePort === 465;
       const isYandex = this.smtpHost.includes('yandex');
       
@@ -43,9 +44,13 @@ export class EmailService {
           rejectUnauthorized: false, // Для разработки, в продакшене лучше true
           ciphers: isYandex ? undefined : 'SSLv3', // Yandex требует современные шифры
         },
-        connectionTimeout: 10000, // 10 секунд таймаут
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
+        connectionTimeout: 30000, // 30 секунд таймаут (увеличено для медленных соединений)
+        greetingTimeout: 30000,
+        socketTimeout: 30000,
+        // Дополнительные настройки для надежности
+        pool: true, // Использовать пул соединений
+        maxConnections: 1,
+        maxMessages: 3,
       });
       this.logger.log(`✅ SMTP настроен: ${this.smtpHost}:${usePort} (secure: ${useSecure})`);
     } else {
@@ -100,11 +105,28 @@ export class EmailService {
     };
 
     try {
-      // Проверяем соединение перед отправкой
-      await this.transporter.verify();
-      this.logger.log(`✅ SMTP соединение проверено успешно`);
+      // Проверяем соединение перед отправкой (с таймаутом)
+      this.logger.log(`🔍 Попытка подключения к ${this.smtpHost}:${this.smtpPort}...`);
+      try {
+        await Promise.race([
+          this.transporter.verify(),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Verification timeout after 30s')), 30000)
+          )
+        ]);
+        this.logger.log(`✅ SMTP соединение проверено успешно`);
+      } catch (verifyError) {
+        this.logger.warn(`⚠️  Предупреждение при проверке SMTP: ${verifyError.message}`);
+        this.logger.warn(`   Продолжаем попытку отправки email...`);
+      }
       
-      const result = await this.transporter.sendMail(mailOptions);
+      this.logger.log(`📤 Отправка email на ${email}...`);
+      const result = await Promise.race([
+        this.transporter.sendMail(mailOptions),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Send timeout after 30s')), 30000)
+        )
+      ]);
       this.logger.log(`✅ Email успешно отправлен на ${email}`);
       this.logger.debug(`Message ID: ${result.messageId}`);
     } catch (error) {
@@ -152,11 +174,38 @@ export class EmailService {
             this.logger.error(`   - Убедитесь, что порт не заблокирован файрволом`);
           }
           this.logger.error(`   - Проверьте интернет соединение`);
-        } else if (error.code === 'ETIMEDOUT' || error.code === 'ECONNREFUSED') {
-          this.logger.error(`⚠️  ОШИБКА ТАЙМАУТА/ОТКЛОНЕНИЯ СОЕДИНЕНИЯ:`);
-          this.logger.error(`   - Сервер не отвечает или недоступен`);
-          this.logger.error(`   - Проверьте правильность SMTP_HOST`);
-          this.logger.error(`   - Проверьте интернет соединение`);
+        } else if (error.code === 'ETIMEDOUT') {
+          this.logger.error(`⚠️  ОШИБКА ТАЙМАУТА (ETIMEDOUT):`);
+          this.logger.error(`   - Сервер ${this.smtpHost} не отвечает в течение 30 секунд`);
+          this.logger.error(`   - Возможные причины:`);
+          this.logger.error(`     1. SMTP сервер недоступен или перегружен`);
+          this.logger.error(`     2. Проблемы с интернет соединением`);
+          this.logger.error(`     3. Файрвол блокирует подключение к порту ${this.smtpPort}`);
+          this.logger.error(`     4. Неправильный SMTP_HOST: ${this.smtpHost}`);
+          const isYandex = this.smtpHost.includes('yandex');
+          if (isYandex) {
+            this.logger.error(`   - Для Yandex проверьте:`);
+            this.logger.error(`     * SMTP_HOST=smtp.yandex.ru (правильно)`);
+            this.logger.error(`     * SMTP_PORT=465 или 587`);
+            this.logger.error(`     * Порт не заблокирован файрволом`);
+            this.logger.error(`     * Yandex SMTP доступен из вашей сети`);
+          } else {
+            this.logger.error(`   - Проверьте настройки SMTP:`);
+            this.logger.error(`     * SMTP_HOST должен быть правильным адресом сервера`);
+            this.logger.error(`     * SMTP_PORT должен быть открыт в файрволе`);
+          }
+          this.logger.error(`   - Попробуйте проверить подключение:`);
+          this.logger.error(`     telnet ${this.smtpHost} ${this.smtpPort}`);
+          this.logger.error(`     или`);
+          this.logger.error(`     nc -zv ${this.smtpHost} ${this.smtpPort}`);
+        } else if (error.code === 'ECONNREFUSED') {
+          this.logger.error(`⚠️  ОШИБКА ОТКЛОНЕНИЯ СОЕДИНЕНИЯ (ECONNREFUSED):`);
+          this.logger.error(`   - Соединение отклонено сервером ${this.smtpHost}:${this.smtpPort}`);
+          this.logger.error(`   - Возможные причины:`);
+          this.logger.error(`     1. Неправильный SMTP_HOST или SMTP_PORT`);
+          this.logger.error(`     2. Сервер не принимает соединения с вашего IP`);
+          this.logger.error(`     3. Порт заблокирован файрволом`);
+          this.logger.error(`   - Проверьте настройки в .env файле`);
         }
       }
       // Не выбрасываем ошибку, код уже выведен в консоль

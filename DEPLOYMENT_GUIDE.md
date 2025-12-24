@@ -1,5 +1,7 @@
 # Руководство по развертыванию на VPS Ubuntu
 
+> **💡 Если у вас IP адрес вместо домена, см. [IP_ADDRESS_SETUP.md](./IP_ADDRESS_SETUP.md)**
+
 ## 📋 Содержание
 1. [Подготовка VPS](#1-подготовка-vps)
 2. [Установка необходимого ПО](#2-установка-необходимого-по)
@@ -117,6 +119,16 @@ PORT=3001
 # JWT Secret (сгенерируйте случайную строку)
 JWT_SECRET=your-super-secret-jwt-key-change-this-to-random-string
 
+# Разрешенные CORS origins (через запятую, без пробелов)
+# Для production укажите ваш домен или IP адрес:
+# С доменом:
+# ALLOWED_ORIGINS=https://your-domain.com,https://www.your-domain.com
+# С IP адресом (HTTP):
+# ALLOWED_ORIGINS=http://123.45.67.89,http://123.45.67.89:3000
+# С IP адресом (HTTPS, если настроен SSL):
+# ALLOWED_ORIGINS=https://123.45.67.89,https://123.45.67.89:3000
+# Для разработки можно оставить пустым (по умолчанию добавится localhost)
+
 # Настройки SMTP для отправки email
 SMTP_HOST=smtp.yandex.ru
 SMTP_PORT=587
@@ -180,9 +192,13 @@ nano .env.local
 Содержимое `.env.local`:
 ```env
 # URL бэкенда (замените на ваш домен или IP)
-NEXT_PUBLIC_API_URL=http://your-domain.com:3001/auth
-# или для локального тестирования:
-# NEXT_PUBLIC_API_URL=http://localhost:3001/auth
+# С доменом:
+# NEXT_PUBLIC_API_URL=http://your-domain.com:3001/auth
+# С IP адресом:
+# NEXT_PUBLIC_API_URL=http://123.45.67.89:3001/auth
+# Или если используете Nginx проксирование:
+# NEXT_PUBLIC_API_URL=http://your-domain.com/api/auth
+# NEXT_PUBLIC_API_URL=http://123.45.67.89/api/auth
 ```
 
 ### 5.3 Сборка фронтенда
@@ -217,7 +233,7 @@ pm2 logs algospec-frontend
 sudo nano /etc/nginx/sites-available/algospec
 ```
 
-Содержимое конфигурации:
+**Если у вас домен**, используйте эту конфигурацию:
 ```nginx
 # Проксирование фронтенда (Next.js)
 server {
@@ -296,6 +312,42 @@ server {
 }
 ```
 
+**Если у вас IP адрес**, используйте эту конфигурацию:
+```nginx
+# Проксирование фронтенда (Next.js) - для IP адреса
+server {
+    listen 80;
+    server_name _;  # _ означает "любой домен/IP"
+    # или укажите конкретный IP: server_name 123.45.67.89;
+
+    # Проксирование на Next.js (порт 3000)
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Проксирование API на бэкенд (порт 3001)
+    location /api {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
 ### 6.2 Активация конфигурации
 ```bash
 sudo ln -s /etc/nginx/sites-available/algospec /etc/nginx/sites-enabled/
@@ -307,22 +359,46 @@ sudo systemctl reload nginx
 
 ## 7. Настройка SSL (HTTPS)
 
-### 7.1 Установка Certbot
+**Важно для IP адресов:**
+- Certbot (Let's Encrypt) **не работает с IP адресами**, только с доменами
+- Для IP адреса можно:
+  - Использовать HTTP (без SSL) - подходит для внутренних сетей
+  - Использовать самоподписанный SSL сертификат (браузер будет показывать предупреждение)
+  - Пропустить этот шаг, если используете только HTTP
+
+### 7.1 Установка Certbot (только для доменов)
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
 ```
 
-### 7.2 Получение SSL сертификата
+### 7.2 Получение SSL сертификата (только для доменов)
 ```bash
 sudo certbot --nginx -d your-domain.com -d www.your-domain.com
 ```
 
-### 7.3 Автоматическое обновление сертификата
+**Для IP адреса:** Если вам нужен HTTPS для IP адреса, создайте самоподписанный сертификат:
+```bash
+# Создание самоподписанного сертификата
+sudo mkdir -p /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+  -out /etc/nginx/ssl/nginx-selfsigned.crt
+
+# Обновите конфигурацию Nginx для использования HTTPS
+# Добавьте в server блок:
+# listen 443 ssl;
+# ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+# ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
+```
+
+**Примечание:** Браузеры будут показывать предупреждение о небезопасном соединении при использовании самоподписанного сертификата. Это нормально для IP адресов.
+
+### 7.3 Автоматическое обновление сертификата (только для доменов)
 ```bash
 sudo certbot renew --dry-run
 ```
 
-Certbot автоматически настроит обновление сертификатов.
+Certbot автоматически настроит обновление сертификатов (только для доменов).
 
 ---
 

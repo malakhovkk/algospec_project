@@ -27,6 +27,9 @@ nano .env  # Заполните настройки
 ```env
 PORT=3001
 JWT_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+# С доменом: ALLOWED_ORIGINS=https://your-domain.com
+# С IP адресом: ALLOWED_ORIGINS=http://123.45.67.89,http://123.45.67.89:3000
+ALLOWED_ORIGINS=http://YOUR_IP_ADDRESS,http://YOUR_IP_ADDRESS:3000
 SMTP_HOST=smtp.yandex.ru
 SMTP_PORT=587
 SMTP_USER=your-email@yandex.ru
