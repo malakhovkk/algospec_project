@@ -1,0 +1,140 @@
+.main {
+  width: 1366px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.main .title {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  color: #FFFFFF;
+  padding-left: 80px;
+  width: 542px;
+}
+
+.title {
+  margin-bottom: 64px;
+}
+
+.sort {
+  padding-left: 80px;
+}
+
+.sort__by {
+  display: flex;
+  flex-direction: row;
+}
+
+.sort__by__choice {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  margin-left: 16px;
+}
+
+.sort__by__caption {
+  color: #7D7D7D;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.sort__by__choice__difficulty {
+  margin-left: 16px;
+  cursor: pointer;
+}
+
+.sort__by__choice__category {
+  cursor: pointer;
+}
+
+.active {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.problems {
+  padding-left: 80px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.problem__theme {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  display: flex;
+  flex-direction: row;
+}
+
+.problem {
+  margin-top: 48px;
+  margin-right: 32px;
+}
+
+.problem__icon {
+  margin-right: 12px;
+}
+
+.problem__content {
+  border-bottom: 1px solid #484848;
+  width: 380px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 32px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.problem__content__name {
+  color: #FFFFFF;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+.closed::after {
+  content: "";
+  position: absolute;
+  background-image: url("/img/closed.png");
+  width: 18px;
+  height: 24px;
+  right: 0;
+  top: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.problem__content__star {
+  margin-right: 12px;
+}
+
+.pink {
+  color: #F2336C;
+}
+
+.orange {
+  color: #FFB82E;
+}
+
+.green {
+  color: #15D361;
+}
+
+.blue {
+  color: #4B5DFD;
+}
+
+.yellow {
+  color: #F2E14C;
+}
+

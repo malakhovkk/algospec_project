@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: url("./assets/fonts/MuseoSansCyrl.otf") format("truetype");
+}
+
+body {
+  background: #111111;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+li {
+  list-style-type: none;
+}
+

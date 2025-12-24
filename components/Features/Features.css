@@ -1,0 +1,67 @@
+.whatcontains {
+  width: 1366px;
+  margin: 0 auto;
+}
+
+.whatcontains__title {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 56px;
+  width: 354px;
+  color: #FFFFFF;
+  margin-left: 80px;
+}
+
+#title {
+  width: 649px;
+}
+
+.whatcontains__title2 {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: #FFFFFF;
+  margin-top: 16px;
+  height: 64px;
+}
+
+.whatcontains__description {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  margin-top: 12px;
+  color: #7D7D7D;
+}
+
+.whatcontains__content {
+  margin-left: 80px;
+  text-align: left;
+  margin-top: 48px;
+}
+
+.whatcontains__tasks {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+.whatcontains__item {
+  width: 277px;
+  margin-right: 40px;
+}
+
+.whatcontains__image {
+  width: auto;
+  height: auto;
+}
+
+.ht {
+  height: 20px;
+}
+

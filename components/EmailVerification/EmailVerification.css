@@ -1,0 +1,132 @@
+.email-verification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #111111;
+  padding: 20px;
+}
+
+.email-verification__container {
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 48px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.email-verification__title {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #141414;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.email-verification__subtitle {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 16px;
+  color: #7D7D7D;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.email-verification__subtitle strong {
+  color: #141414;
+}
+
+.email-verification__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-verification__code-inputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.email-verification__code-input {
+  width: 50px;
+  height: 60px;
+  border: 2px solid #E8E8E8;
+  border-radius: 8px;
+  text-align: center;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #141414;
+  transition: border-color 0.2s;
+}
+
+.email-verification__code-input:focus {
+  outline: none;
+  border-color: #00AAFF;
+}
+
+.email-verification__code-input:disabled {
+  background: #F5F5F5;
+  cursor: not-allowed;
+}
+
+.email-verification__error {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 14px;
+  color: #F2336C;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.email-verification__submit {
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: #141414;
+  border: none;
+  border-radius: 15px;
+  padding: 18px 40px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 24px;
+}
+
+.email-verification__submit:hover:not(:disabled) {
+  background: #333333;
+}
+
+.email-verification__submit:disabled {
+  background: #C0C0C0;
+  cursor: not-allowed;
+}
+
+.email-verification__resend {
+  text-align: center;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 14px;
+  color: #7D7D7D;
+}
+
+.email-verification__resend-btn {
+  background: none;
+  border: none;
+  color: #00AAFF;
+  font-family: "Museo Sans Cyrl", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 8px;
+  padding: 0;
+}
+
+.email-verification__resend-btn:hover:not(:disabled) {
+  color: #0088CC;
+}
+
+.email-verification__resend-btn:disabled {
+  color: #C0C0C0;
+  cursor: not-allowed;
+}
+

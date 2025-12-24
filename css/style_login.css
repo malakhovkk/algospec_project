@@ -1,0 +1,81 @@
+.login
+{
+    width: 580px;
+    height: 421px;
+    position: fixed;
+    top:calc(50% - 290px);
+    left:calc(50% - 220px);
+    background: #FFFFFF;
+    border-radius: 15px;
+    z-index: 100;
+}
+.login__get_key
+{
+    margin-top:48px;
+    font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 32px;
+line-height: 40px;
+/* identical to box height, or 125% */
+
+text-align: center;
+
+color: #141414;
+margin-bottom: 32px;
+}
+.login__caption 
+{
+    font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+
+
+/* Grey */
+
+color: #8D8D8D;
+}
+.login__input
+{
+    width: 500px;
+    height: 55px;
+    outline:none;
+
+background: #F5F5F5;
+border-radius: 15px;
+font-size: 32px;
+padding: 5px;
+}
+.login__form
+{
+    margin-left: 40px;
+}
+.blur
+{
+    filter: blur(5px);
+}
+.login__submit
+{
+
+padding: 18px 40px;
+
+border: none;
+width: 500px;
+height: 55px;
+background: #141414;
+border-radius: 15px;
+outline: none;
+
+font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+
+color: #FFFFFF;
+margin-top: 24px;
+cursor: pointer;
+}

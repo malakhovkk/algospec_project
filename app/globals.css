@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: url("/fonts/MuseoSansCyrl.otf") format("truetype");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #111111;
+  color: #FFFFFF;
+  font-family: "Museo Sans Cyrl", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+li {
+  list-style-type: none;
+}
+
+.wrapper {
+  width: 100%;
+}
+

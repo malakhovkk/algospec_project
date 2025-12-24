@@ -1,0 +1,233 @@
+body
+{
+	background: #111111;
+}
+*{
+	padding:0;
+	margin:0;
+}
+.algospec
+{
+	width:1366px;
+	margin:0 auto;
+}
+.wrapper
+{
+	width:100%;
+}
+.algospec__logo
+{
+	margin-right: 284px;
+	margin-left: 80px;
+}
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: url("../fonts/MuseoSansCyrl.otf") format("truetype");
+}
+li 
+{
+	list-style-type: none;
+}
+.algospec 
+{
+	display: flex;
+	flex-direction: row;
+	box-shadow: 0px 1px 0px #484848;
+	height: 93px;
+}
+.algospec__logo  
+{
+	display: flex;
+	align-items: center;
+}
+.navigation 
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.navigation__item a
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.navigation__item 
+{
+	margin-right: 48px;
+}
+
+.footer
+{
+	width: 1366px;
+	margin: 0 auto;	
+}
+.footer__content
+{
+	margin-left: 80px;
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+margin-bottom: 60px;
+
+color: #7D7D7D;
+margin-top: 120px;
+}
+.main 
+{
+    width: 1366px;
+    margin: 0 auto;
+
+}
+.main .title{
+    font-family: Museo Sans Cyrl;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    color:#FFFFFF;
+    padding-left: 80px; 
+    width: 542px;
+}
+.main 
+{
+    margin-top: 80px;
+}
+.title 
+{
+    margin-bottom: 64px;
+}
+.sort 
+{
+    padding-left: 80px;
+
+}
+.sort__by
+{
+    display: flex;
+    flex-direction: row;
+}
+.sort__by__choice 
+{
+    font-family: Museo Sans Cyrl;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    color:#fff;
+}
+.sort__by__caption
+{
+    color: #7D7D7D;
+    font-family: Museo Sans Cyrl;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+}
+.sort__by__choice 
+{
+    display: flex;
+    flex-direction: row;
+    margin-left: 16px;
+}
+.sort__by__choice__difficulty 
+{
+    margin-left: 16px;
+}
+.active 
+{
+    border-bottom: 1px solid #FFFFFF;
+}
+.problems 
+{
+    padding-left: 80px;
+}
+.problem__theme 
+{
+    font-family: Museo Sans Cyrl;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    color: #00AAFF;
+}
+.problem 
+{
+    margin-top: 48px;
+    margin-right: 32px;
+}
+.problem__content 
+{
+    border-bottom: 1px solid #484848;
+    width: 380px;
+    display: flex;
+    flex-direction: row;
+}
+.problem__content__name 
+{
+    color: #FFFFFF;
+    font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+}
+.problem__theme
+{
+    display: flex;
+    flex-direction: row;
+}
+.binary_search_tree, .binary_tree, .stack, .sort, .heap , .recur 
+{
+    margin-right: 12px;
+}
+
+.problem__content 
+{
+    margin-top: 32px;
+    position: relative;
+    padding-bottom: 10px;
+}
+.closed::after 
+{
+    content: "";
+    position: absolute;
+    background: url("../img/closed.png");
+    width: 18px;
+    height: 24px;
+    right: 0;
+    top:0;
+}
+.problem__content__star
+{
+    margin-right: 12px;
+}
+.pink
+{
+    color: #F2336C;
+}
+.problems 
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.orange
+{
+    color:#FFB82E;
+}
+.green 
+{
+    color: #15D361;
+}
+.blue
+{
+    color: #4B5DFD;
+}
+.yellow 
+{
+    color: #F2E14C;
+}

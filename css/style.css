@@ -1,0 +1,400 @@
+body
+{
+	background: #111111;
+}
+*{
+	padding:0;
+	margin:0;
+}
+.algospec
+{
+	width:1366px;
+	margin:0 auto;
+}
+.wrapper
+{
+	width:100%;
+}
+.algospec__logo
+{
+	margin-right: 284px;
+	margin-left: 80px;
+}
+@font-face {
+  font-family: "Museo Sans Cyrl";
+  src: url("../fonts/MuseoSansCyrl.otf") format("truetype");
+}
+li 
+{
+	list-style-type: none;
+}
+.algospec 
+{
+	display: flex;
+	flex-direction: row;
+	box-shadow: 0px 1px 0px #484848;
+	height: 93px;
+}
+.algospec__logo  
+{
+	display: flex;
+	align-items: center;
+}
+.navigation 
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.navigation__item a
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.navigation__item 
+{
+	margin-right: 48px;
+}
+.one_step{
+	width:1366px;
+	margin:0 auto;
+	display: flex;
+	flex-direction: row;
+}
+.one_step__left
+{
+	width: 491px;
+	margin-left: 80px;
+}
+.one_step__first
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 56px;
+
+	color: #FFFFFF;
+	margin-top: 153px;
+}
+.one_step__second 
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 32px;
+	
+
+
+	color: #7D7D7D;
+}
+.one_step__caption 
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+
+color: #141414;
+	padding: 18px 40px;
+	background: #DCDCDC;
+	border-radius: 15px;
+	text-decoration: none;
+}
+.one_step__join
+{
+	margin-top:50px;
+}
+.one_step__right
+{
+	margin-top: 50px;
+	margin-left: 60px;
+}
+.whatcontains
+{
+	width:1366px;
+	margin:0 auto;	
+}
+.whatcontains__title
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 48px;
+	line-height: 56px;
+
+	width: 354px;
+	color: #FFFFFF;
+		margin-left: 80px;
+}
+.whatcontains__title2
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 32px;
+
+	color: #FFFFFF;
+	margin-top: 16px;
+	height:  64px;
+}
+.whatcontains__description
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 22px;
+/* or 137% */
+margin-top: 12px;
+
+color: #7D7D7D;
+}
+.whatcontains__content
+{
+	margin-left: 80px;
+	text-align: left;
+	margin-top: 48px;
+}
+.whatcontains__tasks
+{
+	display: flex;
+	flex-direction: row;
+}
+.whatcontains__item
+{
+	width:277px;
+	margin-right: 40px;
+}
+.job__title
+{
+	font-family: Museo Sans Cyrl;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 24px;
+
+	text-transform: uppercase;
+
+	color: #7D7D7D;
+}
+.job__content
+{
+	display: flex;
+	flex-direction: row;
+}
+.job
+{
+	width:1366px;
+	margin:0 auto;
+}
+.job__title
+{
+	text-align: center;
+	margin-top: 120px;
+}
+.job__item
+{
+	margin-top: 60px;
+	margin-left: 95px;
+    display: flex;
+    align-items: center;
+}
+/*.whatcontains__item:last-child
+{
+	margin-right: 0;
+}*/
+.topic__title
+{
+font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 48px;
+line-height: 57px;
+/* or 119% */
+
+
+color: #FFFFFF;
+width: 587px;
+margin-left: 80px;
+}
+.topic
+{
+	width: 1366px;
+	margin: 0 auto;
+	margin-top: 120px;
+}
+.topic__questions
+{
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: 80px;
+	margin-top: 48px;
+}
+.topic__question
+{
+	margin-right: 42px;
+	margin-bottom: 104px;
+
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+/* or 133% */
+
+
+color: #FFFFFF;
+}
+.topic__name
+{
+	width: 215px;
+	margin-top:16px;
+}
+.footer
+{
+	width: 1366px;
+	margin: 0 auto;	
+}
+.footer__content
+{
+	margin-left: 80px;
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+margin-bottom: 60px;
+
+color: #7D7D7D;
+margin-top: 120px;
+}
+.ht 
+{
+	height:20px;
+}
+#title
+{
+	width: 649px;
+}
+.join__desc
+{
+	list-style-image: url('../img/g.png');
+	padding-bottom: 32px;
+}
+.join__desc__item
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+
+padding-bottom: 12px;
+color: #7D7D7D;
+}
+.join__title2
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 32px;
+/* identical to box height, or 133% */
+
+
+color: #FFFFFF;
+margin-bottom: 32px;
+
+}
+.join__lr
+{
+	display: flex;
+
+	justify-content: space-between;
+}
+.join__block
+{
+	padding: 48px 71px;
+	border: 1px solid #484848;
+box-sizing: border-box;
+border-radius: 15px;
+width: 586px;
+margin-left: 80px;
+}
+.join
+{
+	width: 1366px;
+	margin: 0 auto;
+	margin-top: 120px;		
+}
+.join__content
+{
+	display: flex;
+}
+.join__price
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 32px;
+line-height: 40px;
+/* identical to box height, or 125% */
+
+
+color: #FFFFFF;
+}
+.join__purchase
+{
+	background: #DCDCDC;
+border-radius: 15px;
+padding: 18px 40px;
+font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 19px;
+
+color: #141414;
+cursor: pointer;
+}
+
+.join__title
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: 500;
+font-size: 48px;
+line-height: 57px;
+/* identical to box height, or 119% */
+
+
+color: #FFFFFF;
+margin-left: 80px;
+margin-bottom: 32px;
+}
+.join__alert
+{
+	font-family: Museo Sans Cyrl;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+
+color: #7D7D7D;
+margin-top: 32px;
+}
