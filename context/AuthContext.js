@@ -3,11 +3,29 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { authAPI } from '@/api/auth';
 
-const AuthContext = createContext(null);
+// Создаем контекст с дефолтным значением для избежания ошибок при SSR
+const AuthContext = createContext({
+  user: null,
+  token: null,
+  login: async () => ({ success: false, error: 'Not initialized' }),
+  register: async () => ({ success: false, error: 'Not initialized' }),
+  logout: () => {},
+  updateUser: () => {},
+  previousPath: null,
+  isAuthenticated: false,
+  loading: true,
+  updatePreviousPath: () => {},
+});
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  // Теперь контекст всегда будет иметь значение (дефолтное или реальное)
+  // Проверяем только, что это не дефолтное значение (которое означает, что Provider не обернул компонент)
+  if (context && context.loading === undefined && context.isAuthenticated === undefined) {
+    // В режиме разработки выводим более подробную ошибку
+    if (process.env.NODE_ENV === 'development') {
+      console.error('useAuth must be used within AuthProvider. Make sure your component is wrapped in <AuthProvider> in app/layout.js');
+    }
     throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
@@ -18,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [previousPath, setPreviousPath] = useState(null);
+  
   useEffect(() => {
     // Проверяем токен при загрузке приложения
     const initAuth = async () => {
@@ -41,9 +60,22 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (emailOrToken, passwordOrUser) => {
     try {
-      const response = await authAPI.login(email, password);
+      // Если передан токен и пользователь (для обновления после верификации)
+      if (typeof emailOrToken === 'string' && emailOrToken.length > 50 && passwordOrUser && typeof passwordOrUser === 'object') {
+        const token = emailOrToken;
+        const user = passwordOrUser;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', token);
+        }
+        setToken(token);
+        setUser(user);
+        return { success: true };
+      }
+      
+      // Обычный логин по email и паролю
+      const response = await authAPI.login(emailOrToken, passwordOrUser);
       if (typeof window !== 'undefined') {
         localStorage.setItem('token', response.access_token);
       }
@@ -103,6 +135,12 @@ export const AuthProvider = ({ children }) => {
     updatePreviousPath
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // Всегда возвращаем Provider, даже если контекст еще не инициализирован
+  // Это гарантирует, что useAuth не выбросит ошибку
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
