@@ -23,42 +23,43 @@ async function bootstrap() {
   
   // Enable CORS for React frontend
   app.enableCors({
-    origin: (origin, callback) => {
-      // Логируем все запросы для отладки
-      console.log(`[CORS] Request from origin: ${origin || 'no origin'}`);
-      console.log(`[CORS] Allowed origins: ${origins.join(', ')}`);
+    // origin: (origin, callback) => {
+    //   // Логируем все запросы для отладки
+    //   console.log(`[CORS] Request from origin: ${origin || 'no origin'}`);
+    //   console.log(`[CORS] Allowed origins: ${origins.join(', ')}`);
       
-      // Разрешаем запросы без origin (например, мобильные приложения, Postman)
-      if (!origin) {
-        console.log(`[CORS] Allowing request without origin`);
-        return callback(null, true);
-      }
+    //   // Разрешаем запросы без origin (например, мобильные приложения, Postman)
+    //   if (!origin) {
+    //     console.log(`[CORS] Allowing request without origin`);
+    //     return callback(null, true);
+    //   }
       
-      // Проверяем точное совпадение
-      if (origins.includes(origin)) {
-        console.log(`[CORS] Origin ${origin} is allowed`);
-        return callback(null, true);
-      }
+    //   // Проверяем точное совпадение
+    //   if (origins.includes(origin)) {
+    //     console.log(`[CORS] Origin ${origin} is allowed`);
+    //     return callback(null, true);
+    //   }
       
-      // Проверяем совпадение без учета протокола (http vs https)
-      const originWithoutProtocol = origin.replace(/^https?:\/\//, '');
-      const matchingOrigin = origins.find(allowed => {
-        const allowedWithoutProtocol = allowed.replace(/^https?:\/\//, '');
-        return allowedWithoutProtocol === originWithoutProtocol;
-      });
+    //   // Проверяем совпадение без учета протокола (http vs https)
+    //   const originWithoutProtocol = origin.replace(/^https?:\/\//, '');
+    //   const matchingOrigin = origins.find(allowed => {
+    //     const allowedWithoutProtocol = allowed.replace(/^https?:\/\//, '');
+    //     return allowedWithoutProtocol === originWithoutProtocol;
+    //   });
       
-      if (matchingOrigin) {
-        console.log(`[CORS] Origin ${origin} matched ${matchingOrigin} (protocol difference)`);
-        return callback(null, true);
-      }
+    //   if (matchingOrigin) {
+    //     console.log(`[CORS] Origin ${origin} matched ${matchingOrigin} (protocol difference)`);
+    //     return callback(null, true);
+    //   }
       
-      // Логируем отклоненные origins
-      console.error(`[CORS] ❌ Origin ${origin} is NOT allowed`);
-      console.error(`[CORS] Allowed origins: ${origins.join(', ')}`);
-      console.error(`[CORS] Origin without protocol: ${originWithoutProtocol}`);
+    //   // Логируем отклоненные origins
+    //   console.error(`[CORS] ❌ Origin ${origin} is NOT allowed`);
+    //   console.error(`[CORS] Allowed origins: ${origins.join(', ')}`);
+    //   console.error(`[CORS] Origin without protocol: ${originWithoutProtocol}`);
       
-      callback(new Error(`Not allowed by CORS. Origin: ${origin}, Allowed: ${origins.join(', ')}`));
-    },
+    //   callback(new Error(`Not allowed by CORS. Origin: ${origin}, Allowed: ${origins.join(', ')}`));
+    // },
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
